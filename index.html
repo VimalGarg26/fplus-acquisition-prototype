@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Factor Plus acquisition — clickable prototype (iOS) · v2 · 14 Oct 2026</title>
+<link rel="stylesheet" href="clickable.css">
+<style>
+.opt .grp{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:6px 0 0}
+.opt button .nw{display:inline-block;background:var(--green);color:#fff;font-size:9px;font-weight:800;padding:1px 6px;border-radius:4px;margin-left:6px;vertical-align:1px}
+.opp{max-width:1440px;margin:10px auto 60px;padding:0 28px}
+.opp h2{font-size:20px;letter-spacing:-.02em;margin:0 0 4px}
+.opp table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;font-size:12.5px;margin-top:12px}
+.opp th,.opp td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.opp th{background:var(--sand);font-size:11px;text-transform:uppercase;letter-spacing:.05em}
+.opp td.k{font-weight:700}
+.opp .try{border:1.5px solid var(--green);background:#fff;color:var(--green);border-radius:7px;padding:4px 9px;font-weight:700;font-size:11.5px;cursor:pointer;white-space:nowrap}
+.opp .warn{background:#FFF8E6;border:1px solid #F0D58C;border-radius:10px;padding:10px 12px;font-size:12.5px;margin-top:12px}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="ctl">
+    <h1>Factor Plus acquisition</h1>
+    <div class="sub">Clickable iOS prototype, v2. Switch between <b>Today</b> and <b>Proposed</b> and run the same journey in each. v2 adds 5 upsell moments competitors use that we don’t (marked NEW). Low fidelity, built for internal discussion. Static version: <a href="static.html">index.html</a>. Full list: <a href="#opps">below</a>.</div>
+
+    <h4>1 · Mode</h4>
+    <div class="opt mode">
+      <button data-mode="today" class="t"><b>Today</b><span>Current product + Q3 designs</span></button>
+      <button data-mode="proposed" class="p"><b>Proposed</b><span>Teardown fixes + new moments</span></button>
+    </div>
+
+    <h4>2 · Starting point</h4>
+    <div class="opt">
+      <div class="grp">Fix existing surfaces</div>
+      <button data-flow="cart"><b>Cart checkbox</b><span>Join without leaving the cart (A)</span></button>
+      <button data-flow="post"><b>Post-order interstitial</b><span>Q3 surface (B)</span></button>
+      <button data-flow="browse"><b>Browse: Home, Premium, Benefits</b><span>Entry points + member pricing (C, D)</span></button>
+      <div class="grp">Missed moments</div>
+      <button data-flow="account"><b>Account: shipping look-back<span class="nw">NEW</span></b><span>“You paid $51.96 in shipping”</span></button>
+      <button data-flow="tracking"><b>Delivery tracking<span class="nw">NEW</span></b><span>“Make your next box ship free”</span></button>
+      <button data-flow="plan"><b>Plan settings: member price<span class="nw">NEW</span></b><span>Price option where cost is managed</span></button>
+      <button data-flow="cancel"><b>Cancel: “too expensive” save<span class="nw">NEW</span></b><span>Factor Plus instead of a smaller plan</span></button>
+      <button data-flow="hub"><b>Member hub: annual upsell<span class="nw">NEW</span></b><span>Already a member: savings → annual</span></button>
+    </div>
+
+    <h4>3 · Offer (Proposed only)</h4>
+    <div class="opt">
+      <button data-variant="paid"><b>A · Paid, monthly default</b><span>$24.99 / 4 weeks, annual one tap away</span></button>
+      <button data-variant="trial"><b>B · Free-shipping trial</b><span>2 boxes free; $20 credit after trial · P&amp;L-gated</span></button>
+    </div>
+
+    <h4>Scorecard</h4>
+    <div class="score" id="score"></div>
+    <button class="reset" id="reset">↺ Restart this journey</button>
+  </div>
+
+  <div><div class="phone" id="phone"></div></div>
+
+  <div class="side" id="side"></div>
+</div>
+
+<div class="opp" id="opps">
+  <h2>Upsell moments competitors use that Factor doesn’t</h2>
+  <div class="sub">Sources: Mobbin iOS screens (Uber Eats/Postmates, DoorDash, Instacart, Grubhub, Deliveroo, Gojek, Skip, Swiggy, Thrive Market, Gopuff, Angi, Wolt, Walmart+), the 12 Oct acquisition teardown, the 7 Oct member teardown and the 14 Oct in-funnel experiment refresh.</div>
+  <table>
+    <tr><th>#</th><th>Moment</th><th>Who does it</th><th>What Factor does today</th><th>Proposed (in prototype)</th><th>Hypothesis · kill threshold</th><th></th></tr>
+    <tr><td>1</td><td class="k">Personal shipping look-back</td><td>Swiggy (“₹538 saved with previous plan”), Thrive Market (“Members save an average of $39 per order”), Gopuff</td><td>Account lists Factor Plus as an “available subscription” with no number</td><td>Account card: shipping paid over the last 4 boxes vs the $24.99 fee = what you’d have kept</td><td>Account-entry → member ≥ 2× the current Manage Subscriptions entry · kill if &lt;1.3× after 4 wks</td><td><button class="try" data-go="account">Try it</button></td></tr>
+    <tr><td>2</td><td class="k">Delivery tracking / “while you wait”</td><td>Uber Eats, Deliveroo, Gojek PLUS, Skip, Postmates (benefit reveal)</td><td>Nothing. Tracking is the highest-attention screen of the week and carries no message</td><td>“Make your next box ship free”, with a 4-week frequency cap on dismiss</td><td>Tracking-card CTR ≥3%, adopters ≥0.3% of exposed prospects per week · kill if adopters &lt;0.1% · guardrail: next-box skip rate flat</td><td><button class="try" data-go="tracking">Try it</button></td></tr>
+    <tr><td>3</td><td class="k">Member price as a price option</td><td>Angi (“Key member price” vs “Regular price”), Gopuff (“$0.00 with FAM” on the delivery line), IKEA Family, Grab</td><td>Plan settings shows $12.99 shipping as a fixed cost</td><td>Factor Plus row in the weekly total: “With Factor Plus: $69.96 / week”</td><td>Plan-settings entry → member ≥1% of visitors · guardrail: plan-size downgrades flat or down</td><td><button class="try" data-go="plan">Try it</button></td></tr>
+    <tr><td>4</td><td class="k">Cancel save routed by reason</td><td>DashPass (savings + keep), Instacart (reminder), Temu (“You saved $6.96”), Swiggy (renew)</td><td>“Too expensive?” only offers a smaller plan (revenue down). Same 3 cards for every reason</td><td>Ask the reason first. For “Too expensive” + ≥2 boxes in 4 weeks, offer Factor Plus: same plan, $26.97 less every 4 weeks</td><td>Price-reason save rate ≥ +5pp vs “switch plans” · 8-wk AOR of saved customers ≥ switchers · kill if save rate flat</td><td><button class="try" data-go="cancel">Try it</button></td></tr>
+    <tr><td>5</td><td class="k">Savings meter → annual upsell</td><td>Uber One (“Total savings this cycle”), Wolt+ (“You’ve saved €4.17”), Walmart+ (“My savings”), Gopuff FAM ($150/yr)</td><td>Hub has a plain “Switch to Annual Plan” button and no savings figure</td><td>Savings this cycle with a “pays for itself” meter. Annual offered after 2 paid cycles, with $0 today and the switch at renewal</td><td>Monthly → annual switch ≥ +3pp among eligible members · guardrail: refund requests at renewal ≤ current</td><td><button class="try" data-go="hub">Try it</button></td></tr>
+  </table>
+  <div class="warn"><b>Why these moments, not more in-funnel:</b> today’s <code>factor_plus_in_funnel</code> pulse (14 Oct) shows adoption +22.4% but <b>gross activations −5.05%</b> (seq-significant), about 1.9 lost activations per extra adopter. All 5 moments above sit <b>after activation</b> (account, tracking, plan settings, cancel, hub), so they can’t repeat that trade. Keep gross activations as a hard guardrail on anything that touches new-customer checkout (E7).</div>
+  <div class="warn" style="background:#fff;border-color:var(--line)"><b>Considered, not prototyped:</b> household / family sharing (Instacart, talabat). It adds cost and fraud risk until the package is cheaper (SCAMPER C3). Student / SNAP tiers (Shipt, DashPass) need eligibility tooling. Partner perks and sponsored offers (Uber Eats × Hulu, Deliveroo × Amazon Music, Skip × Apple Arcade): category evidence says perk catalogues get cut, and sponsored offers would compete with the Factor Plus card for the same space. Gift a membership: low volume.</div>
+</div>
+
+<script src="screens-today.js"></script>
+<script src="screens-proposed.js"></script>
+<script src="screens-more.js"></script>
+<script src="clickable.js"></script>
+<script>
+document.querySelectorAll('[data-go]').forEach(b => b.addEventListener('click', () => {
+  fresh({ mode: 'proposed', flow: b.dataset.go, variant: S.variant }); render(); window.scrollTo({ top: 0, behavior: 'smooth' });
+}));
+</script>
+</body>
+</html>

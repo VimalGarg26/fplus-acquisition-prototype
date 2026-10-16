@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Factor Plus acquisition — today vs proposed (iOS app) · 14 Oct 2026</title>
+<style>
+:root{
+  --ink:#1D1D1B; --muted:#6B6B66; --line:#E4E0D6; --cream:#F5F2EB; --sand:#ECE7DC;
+  --mint:#D7EDD0; --mint-2:#EAF5E5; --green:#0F6B3A; --green-2:#1F8A4C;
+  --red:#C8341F; --red-soft:#FCE9E5; --amber:#B7791F; --blue-soft:#D8F0F7;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:#FBFAF7;color:var(--ink);font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:14px;line-height:1.4}
+h1,h2,h3{margin:0;letter-spacing:-.02em}
+.page{max-width:1640px;margin:0 auto;padding:36px 40px 80px}
+.top h1{font-size:34px;font-weight:800}
+.top .sub{color:var(--muted);margin-top:6px;font-size:15px}
+.legend{display:flex;gap:22px;margin-top:16px;flex-wrap:wrap;font-size:13px}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.kpi{display:inline-flex;gap:6px;align-items:center;background:var(--sand);border-radius:999px;padding:4px 12px;font-size:12px;font-weight:600}
+.kpi.g{background:var(--mint)}
+.toc{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:22px}
+.toc div{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:13px}
+.toc b{display:block;font-size:14px;margin-bottom:2px}
+
+section{margin-top:56px;border-top:2px solid var(--ink);padding-top:22px}
+section > .hd{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
+section h2{font-size:26px;font-weight:800}
+section .why{color:var(--muted);max-width:900px;margin-top:4px}
+.strip{display:flex;gap:28px;align-items:flex-start;margin-top:22px;padding:20px;border-radius:18px}
+.strip.today{background:#F3EFEA}
+.strip.prop{background:#EEF6EA}
+.strip .label{width:210px;flex:none}
+.strip .label .tag{display:inline-block;font-weight:800;font-size:12px;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:6px;color:#fff}
+.strip.today .tag{background:var(--red)} .strip.prop .tag{background:var(--green)}
+.strip .label .metric{margin-top:12px;font-size:28px;font-weight:800;letter-spacing:-.02em}
+.strip .label .metric small{display:block;font-size:12px;font-weight:500;color:var(--muted);letter-spacing:0}
+.strip .label ol{padding:0;margin:14px 0 0;list-style:none;font-size:12.5px}
+.strip .label li{display:flex;gap:8px;margin-bottom:9px}
+.phones{display:flex;gap:26px;flex-wrap:wrap;align-items:flex-start}
+.cap{font-size:12px;color:var(--muted);margin-top:8px;text-align:center;max-width:300px}
+.cap b{color:var(--ink)}
+.arrow{align-self:center;font-size:28px;color:var(--muted);margin:0 -10px}
+
+/* pins */
+.pin{flex:none;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;font-size:11px;font-weight:800;color:#fff;background:var(--red);box-shadow:0 0 0 2px #fff}
+.pin.g{background:var(--green)}
+.phone .pin{position:absolute;z-index:40}
+
+/* phone */
+.phone{position:relative;width:300px;height:690px;border-radius:42px;border:9px solid #141414;background:#fff;overflow:hidden;box-shadow:0 14px 36px rgba(0,0,0,.14)}
+.phone .scr{position:absolute;inset:0;overflow:hidden;font-size:12px}
+.sb{height:34px;display:flex;justify-content:space-between;align-items:center;padding:0 22px 0 26px;font-weight:700;font-size:12px}
+.sb i{font-style:normal;letter-spacing:1px;font-size:10px}
+.home-ind{position:absolute;bottom:6px;left:50%;transform:translateX(-50%);width:110px;height:4px;border-radius:3px;background:#111;z-index:60}
+.ch{display:flex;align-items:center;gap:8px;padding:6px 14px 10px;border-bottom:1px solid var(--line)}
+.ch .x{font-size:18px;width:20px}
+.ch .t{flex:1;text-align:center;margin-right:20px}
+.ch .t b{font-size:15px}
+.ch .t div{font-size:10.5px;color:var(--muted)}
+.cnt{display:inline-flex;align-items:center;justify-content:center;background:var(--sand);border-radius:10px;font-size:10px;padding:0 6px;margin-left:4px;font-weight:700}
+.body{padding:10px 14px}
+.h3{font-size:15px;font-weight:800;margin:4px 0 8px}
+.meal{display:flex;gap:10px;align-items:center;margin-bottom:9px}
+.meal img{width:46px;height:46px;border-radius:8px;object-fit:cover}
+.meal .n{flex:1;font-weight:700;font-size:11.5px}
+.step{display:flex;border:1px solid #6BA35A;border-radius:6px;overflow:hidden;font-size:11px}
+.step span{width:22px;height:22px;display:flex;align-items:center;justify-content:center;background:var(--mint)}
+.step span:nth-child(2){background:#fff}
+.tot{font-size:11.5px}
+.tot .r{display:flex;justify-content:space-between;padding:3px 0}
+.tot .r.b{font-weight:800;font-size:13.5px;border-top:1px solid var(--line);margin-top:4px;padding-top:7px}
+.strike{text-decoration:line-through;color:var(--muted);font-weight:400}
+.grn{color:var(--green);font-weight:700}
+.red{color:var(--red)}
+.bottom{position:absolute;left:0;right:0;bottom:0;background:#fff;padding:10px 12px 18px;border-top:1px solid var(--line);z-index:20}
+.btn{display:flex;align-items:center;justify-content:center;background:#141414;color:#fff;border-radius:8px;height:40px;font-weight:700;font-size:12.5px;text-align:center}
+.btn.out{background:#fff;color:#141414;border:1.5px solid #141414}
+.btn.dis{background:#BDBAB2}
+.btn.grnb{background:var(--green)}
+.link{color:var(--green);font-weight:700;text-decoration:underline;font-size:11px}
+.cb{display:flex;gap:9px;align-items:flex-start;background:var(--mint);border:1px solid #9FCB90;border-radius:8px;padding:9px 10px;margin-bottom:8px;font-size:11px;font-weight:700}
+.box{width:16px;height:16px;border:1.5px solid #141414;border-radius:3px;flex:none;background:#fff;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px}
+.box.on{background:var(--green);border-color:var(--green)}
+.fp{display:inline-flex;align-items:center;justify-content:center;background:#141414;color:#fff;font-weight:900;font-size:9.5px;border-radius:4px;padding:2px 3px;line-height:1;letter-spacing:-.02em}
+.fp.g{background:var(--green)}
+.fp.lg{font-size:16px;padding:6px 7px;border-radius:8px}
+.dim{position:absolute;inset:0;background:rgba(15,15,15,.48);z-index:25}
+.sheet{position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:20px 20px 0 0;z-index:30;padding:8px 14px 20px}
+.grab{width:36px;height:4px;border-radius:3px;background:#CFCBC2;margin:0 auto 10px}
+.ben{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--line);font-size:11.5px}
+.ben:last-child{border-bottom:0}
+.ok{width:16px;height:16px;border-radius:50%;background:var(--green-2);color:#fff;display:flex;align-items:center;justify-content:center;font-size:9px;flex:none}
+.ben .v{margin-left:auto;font-weight:800;white-space:nowrap}
+.seg{display:flex;background:var(--cream);border-radius:10px;padding:3px;gap:3px;margin:10px 0}
+.seg div{flex:1;border-radius:8px;padding:6px 7px;font-size:10.5px;line-height:1.25}
+.seg div b{display:block;font-size:11.5px}
+.seg .on{background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.15);outline:1.5px solid var(--green)}
+.pay{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:8px;padding:7px 9px;font-size:11px;margin-bottom:10px}
+.pp{font-weight:900;font-style:italic;color:#253B80;font-size:12px}
+.pp span{color:#179BD7}
+.legal{font-size:9.5px;color:var(--muted);margin-top:8px;line-height:1.35}
+.radio{display:flex;gap:9px;border:1.5px solid var(--line);border-radius:10px;padding:9px 10px;margin-bottom:8px;font-size:11px}
+.radio.on{border-color:#141414}
+.rd{width:15px;height:15px;border-radius:50%;border:1.5px solid #141414;flex:none;margin-top:1px}
+.radio.on .rd{border:5px solid #141414}
+.toast{position:absolute;left:10px;right:10px;top:40px;background:#141414;color:#fff;border-radius:12px;padding:9px 11px;display:flex;gap:9px;align-items:center;z-index:45;font-size:11px;box-shadow:0 8px 20px rgba(0,0,0,.25)}
+.chip{display:inline-block;background:#141414;color:#fff;font-weight:800;font-size:8.5px;padding:3px 6px;border-radius:4px;letter-spacing:.05em}
+.tile{border-radius:12px;overflow:hidden;border:1px solid var(--line);margin-bottom:10px}
+.tile img{width:100%;height:120px;object-fit:cover;object-position:center 20%;display:block}
+.tile .tb{padding:8px 10px}
+.tile .nm{font-weight:800;font-size:12.5px}
+.tile .pr{display:flex;align-items:center;gap:6px;margin-top:5px;font-size:11.5px}
+.banner{display:flex;align-items:center;gap:8px;background:var(--mint);border-radius:8px;padding:9px 10px;font-weight:700;font-size:11px;margin:8px 0 10px}
+.tabs{display:flex;gap:12px;padding:8px 14px;border-bottom:1px solid var(--line);font-size:11px;white-space:nowrap;overflow:hidden}
+.tabs .on{font-weight:800;border-bottom:2px solid #141414;padding-bottom:5px}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:10px}
+.lock{display:inline-block;background:#FBE3CF;color:#8A4B12;font-weight:800;font-size:9px;padding:3px 7px;border-radius:5px}
+.ghost{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px;color:var(--muted);background:repeating-linear-gradient(45deg,#FAF8F4,#FAF8F4 10px,#F2EEE7 10px,#F2EEE7 20px)}
+.ghost b{color:var(--ink);font-size:16px;margin-bottom:6px}
+.meter{height:6px;border-radius:4px;background:#fff;overflow:hidden;margin-top:6px}
+.meter i{display:block;height:100%;width:100%;background:var(--green-2)}
+.tl{display:flex;justify-content:space-between;margin:10px 0 4px;position:relative;font-size:9.5px;text-align:center}
+.tl:before{content:"";position:absolute;top:6px;left:12%;right:12%;height:2px;background:var(--line)}
+.tl div{position:relative;flex:1}
+.tl .d{width:14px;height:14px;border-radius:50%;background:#fff;border:2px solid var(--green-2);margin:0 auto 4px}
+.tl .d.f{background:var(--green-2)}
+.mm{font-size:11px;color:var(--muted)}
+.copy{width:100%;border-collapse:collapse;margin-top:18px;background:#fff;border-radius:12px;overflow:hidden;font-size:13px}
+.copy th,.copy td{padding:10px 14px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.copy th{background:var(--sand);font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+.copy td.k{background:var(--mint-2);font-weight:700}
+.note{margin-top:14px;font-size:12.5px;color:var(--muted)}
+.flag{display:inline-block;background:#FFF3D6;color:#7A5300;border:1px solid #F0D58C;border-radius:6px;padding:2px 8px;font-size:11px;font-weight:700}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="top">
+  <h1>Factor Plus acquisition: today vs proposed (iOS app)</h1>
+  <div class="sub">Mockup of the changes in the <i>Factor Plus acquisition teardown</i> (12 Oct 2026). Prospect = active Factor customer who isn’t a member. Low fidelity, built for internal discussion; not a final design. Desktop Q3 frames have been redrawn as app screens. <b><a href="clickable.html">Open the clickable version →</a></b></div>
+  <div class="legend">
+    <span><span class="pin">1</span> Problem today</span>
+    <span><span class="pin g">1</span> Proposed change</span>
+    <span class="kpi">Lagging: Pass adoption ≥5%</span>
+    <span class="kpi">Leading: entry→member conversion, taps-to-member</span>
+    <span class="kpi">Guardrails: 8-wk AOR · refund/accidental sign-up · CC contacts · EBIT-neutral</span>
+  </div>
+  <div class="toc">
+    <div><b>A · Join from the cart without leaving it</b>Teardown gaps G1 + G4 · Priority #1</div>
+    <div><b>B · Post-order interstitial fixes</b>G7 · Priority #2 (before Q3 ships)</div>
+    <div><b>C · Welcome screen + member price on Premium meals</b>G5 · Priority #5 · retention lever</div>
+    <div><b>D · Entry points + one savings claim</b>G3 + G6 · Priorities #3 and #6</div>
+  </div>
+</div>
+
+<!-- ============================ A ============================ -->
+<section>
+  <div class="hd">
+    <div>
+      <h2>A · Join from the cart without leaving it</h2>
+      <div class="why">Today the cart checkbox doesn’t add anything. It replaces “All done!” with a link out of the cart, then leads through a join page and a modal with annual $99 preselected. The proposal: one sheet opens over the cart, with the monthly plan preselected, the saved PayPal and one button.</div>
+    </div>
+    <span class="kpi g">Hypothesis: cart entry→member ≥ +30% relative · kill if &lt;10% after 2 wks · refund-48h ≤ +0.5pp</span>
+  </div>
+
+  <div class="strip today">
+    <div class="label">
+      <span class="tag">Today</span>
+      <div class="metric">5 taps + 1 page change<small>tick → See benefits → Join Annual → tick consent → Join</small></div>
+      <ol>
+        <li><span class="pin">1</span><span>Ticking the checkbox navigates away instead of adding Factor Plus</span></li>
+        <li><span class="pin">2</span><span>“All done!” disappears, so the user can’t finish the order</span></li>
+        <li><span class="pin">3</span><span>Annual $99 is the default. “Save 67%” here conflicts with “70%” in the modal</span></li>
+        <li><span class="pin">4</span><span>“$80 a month” is a fourth savings number, with no basis given</span></li>
+        <li><span class="pin">5</span><span>“Risk-free” and “nonrefundable” appear in the same modal; the refund window is 48h and only if benefits are unused</span></li>
+        <li><span class="pin">6</span><span>A required consent checkbox blocks the button</span></li>
+      </ol>
+    </div>
+    <div class="phones">
+      <!-- A-T1 cart ticked -->
+      <div>
+        <div class="phone"><div class="scr">
+          <div class="sb">9:41<i>●●● ᯤ ▮</i></div>
+          <div class="ch"><span class="x">✕</span><div class="t"><b>Your cart</b><span class="cnt">4</span><div>Edit delivery by Wed, Aug 19</div></div></div>
+          <div class="body">
+            <div class="h3">Meals <span class="cnt">4</span></div>
+            <div class="meal"><img src="assets/meal1.jpg"><div class="n">Roasted Garlic Chicken</div><div class="step"><span>−</span><span>1</span><span>+</span></div></div>
+            <div class="meal"><img src="assets/meal2.jpg"><div class="n">Nonna’s Sunday Beef Bolognese</div><div class="step"><span>−</span><span>1</span><span>+</span></div></div>
+            <div class="meal"><img src="assets/meal3.jpg"><div class="n">Cavatappi &amp; Meatballs</div><div class="step"><span>−</span><span>1</span><span>+</span></div></div>
+            <div class="meal"><img src="assets/meal4.jpg"><div class="n">Smoky Tomato Chicken</div><div class="step"><span>−</span><span>1</span><span>+</span></div></div>
+            <div class="h3" style="margin-top:12px">Order total</div>
+            <div class="tot">
+              <div class="r"><span>4 meals</span><span>$69.96</span></div>
+              <div class="r"><span>Shipping</span><span>$12.99</span></div>
+              <div class="r b"><span>Total</span><span>$82.95</span></div>
+            </div>
+          </div>
+          <div class="bottom">
+            <div class="cb" style="background:#B9DFAC"><div class="box on">✓</div><div>Save <span class="red">$12.99</span> &amp; more with Factor Plus on this order</div></div>
+            <div class="btn">See Factor Plus benefits</div>
+          </div>
+          <span class="pin" style="left:6px;bottom:96px">1</span>
+          <span class="pin" style="right:8px;bottom:38px">2</span>
+          <div class="home-ind"></div>
+        </div></div>
+        <div class="cap"><b>Cart, box ticked.</b> The main button changes to a link out of the cart.</div>
+      </div>
+      <div class="arrow">→</div>
+      <!-- A-T2 join page -->
+      <div>
+        <div class="phone"><div class="scr" style="background:var(--cream)">
+          <div class="sb">9:41<i>●●● ᯤ ▮</i></div>
+          <div class="ch" style="background:#fff"><span class="x">‹</span><div class="t"><b>Factor Plus</b></div></div>
+          <div class="body">
+            <div style="font-size:21px;font-weight:800;letter-spacing:-.02em;margin:4px 0 10px">Factor Plus membership</div>
+            <div class="card">
+              <div style="font-weight:700;margin-bottom:6px">Factor Plus Benefits</div>
+              <div class="ben"><span class="ok">✓</span><div><b>Free shipping on all orders</b><div class="mm">Save $12.99 per week on delivery fees</div></div></div>
+              <div class="ben"><span class="ok">✓</span><div><b>$20 off premium meals per box</b><div class="mm">Exclusive discounts on Chef’s Choice and premium selections</div></div></div>
+            </div>
+            <div class="card" style="border:1.5px solid var(--green);position:relative">
+              <span style="position:absolute;top:-8px;left:50%;transform:translateX(-50%);background:var(--green);color:#fff;font-size:8.5px;font-weight:800;padding:2px 6px;border-radius:4px">BEST VALUE</span>
+              <div style="font-weight:700">ANNUAL</div>
+              <div style="font-size:17px;font-weight:800">$99.00</div><div class="mm">per year + tax</div>
+              <div class="grn" style="font-size:10.5px;margin:4px 0 8px">$8.25 / mo • Save 67%</div>
+              <div class="btn">Join Annual Plan</div>
+            </div>
+            <div class="card">
+              <div style="font-weight:700">MONTHLY</div>
+              <div style="font-size:17px;font-weight:800">$24.99</div><div class="mm">per 4 weeks + tax</div>
+              <div class="btn out" style="height:32px;margin-top:8px">Join Monthly Plan</div>
+            </div>
+          </div>
+          <span class="pin" style="right:16px;top:318px">3</span>
+          <div class="home-ind"></div>
+        </div></div>
+        <div class="cap"><b>Join page.</b> Annual is filled and labelled BEST VALUE; monthly is an outline button.</div>
+      </div>
+      <div class="arrow">→</div>
+      <!-- A-T3 join modal -->
+      <div>
+        <div class="phone"><div class="scr">
+          <div class="sb">9:41<i>●●● ᯤ ▮</i></div>
+          <div class="dim" style="top:0"></div>
+          <div class="sheet" style="top:70px">
+            <div class="grab"></div>
+            <div style="font-weight:900;letter-spacing:.04em;font-size:12px">FACTOR_PLUS</div>
+            <div style="font-size:15px;font-weight:800;margin:4px 0 10px">Members save on average $80 a month</div>
+            <div class="radio"><span class="rd"></span><div><b>Monthly</b> $24.99 / every 4 weeks + tax<div class="grn" style="font-size:10px">Pays for itself in 2 orders</div></div></div>
+            <div class="radio on"><span class="rd"></span><div><b>Annual</b> <span class="grn" style="font-size:9.5px;background:var(--mint);padding:1px 5px;border-radius:4px">SAVE 70%</span><br>$99.00 / every 365 days + tax</div></div>
+            <div class="pay"><span class="pp">Pay<span>Pal</span></span> vimal.g•••@gmail.com</div>
+            <div style="background:var(--blue-soft);border-radius:8px;padding:8px 9px;font-size:10.5px"><b>Try it - risk-free.</b> Cancel within 48 hours for a full refund - if you haven’t used your benefits.</div>
+            <div style="display:flex;gap:8px;margin:10px 0;font-size:9.5px;color:var(--muted)"><div class="box"></div><div>By checking this box, I agree to the $99.00 annual, <b style="color:var(--ink)">nonrefundable</b>, auto-renewing charge…</div></div>
+            <div class="btn dis">Join Factor Plus</div>
+          </div>
+          <span class="pin" style="right:12px;top:100px">4</span>
+          <span class="pin" style="right:12px;top:312px">5</span>
+          <span class="pin" style="left:4px;top:378px">6</span>
+          <span class="pin" style="left:4px;top:200px">3</span>
+          <div class="home-ind"></div>
+        </div></div>
+        <div class="cap"><b>Join modal.</b> Annual is preselected, and the button stays disabled until the consent box is ticked. It’s unclear whether the user goes back to the cart afterwards (teardown Q4).</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="strip prop">
+    <div class="label">
+      <span class="tag">Proposed</span>
+      <div class="metric">2 taps, no page change<small>toggle → Join (PayPal already on file)</small></div>
+      <ol>
+        <li><span class="pin g">1</span><span>The cart toggle opens a sheet over the cart; the user stays put</span></li>
+        <li><span class="pin g">2</span><span>One savings claim, shipping first: “Save $12.99 on this box · pays for itself in 2 boxes”</span></li>
+        <li><span class="pin g">3</span><span>Monthly is the default; annual is one tap away, labelled “save 70%” (the correct figure)</span></li>
+        <li><span class="pin g">4</span><span>The button states the price and the outcome. “By tapping…” replaces the consent checkbox (<span class="flag">legal check: Q2</span>)</span></li>
+        <li><span class="pin g">5</span><span>After joining, the user is back in the cart: shipping shows $0, “All done!” is still there, and a confirmation appears</span></li>
+        <li><span class="pin g">6</span><span>Variant B (test arm): free shipping on 2 boxes as a trial; the $20 Premium credit starts after the first paid cycle (Grubhub model) (<span class="flag">P&amp;L-gated</span>)</span></li>
+      </ol>
+    </div>
+    <div class="phones">
+      <!-- A-P1 sheet over cart -->
+      <div>
+        <div class="phone"><div class="scr">
+          <div class="sb">9:41<i>●●● ᯤ ▮</i></div>
+          <div class="ch"><span class="x">✕</span><div class="t"><b>Your cart</b><span class="cnt">4</span><div>Edit delivery by Wed, Aug 19</div></div></div>
+          <div class="body">
+            <div class="h3">Meals <span class="cnt">4</span></div>
+            <div class="meal"><img src="assets/meal1.jpg"><div class="n">Roasted Garlic Chicken</div></div>
+            <div class="meal"><img src="assets/meal2.jpg"><div class="n">Nonna’s Sunday Beef Bolognese</div></div>
+          </div>
+          <div class="dim"></div>
+          <div class="sheet">
+            <div class="grab"></div>
+            <div style="display:flex;align-items:center;gap:7px"><span class="fp g">F+</span><b>Factor Plus</b><span style="margin-left:auto;color:var(--muted)">✕</span></div>
+            <div style="font-size:18px;font-weight:800;margin:8px 0 2px;letter-spacing:-.02em">Save $12.99 on this box</div>
+            <div class="mm">Pays for itself in 2 boxes · cancel anytime</div>
+            <div style="margin-top:6px">
+              <div class="ben"><span class="ok">✓</span>Free shipping, every box<span class="v grn">−$12.99</span></div>
+              <div class="ben"><span class="ok">✓</span>$20 off Premium meals, every box<span class="v grn">up to −$20</span></div>
+            </div>
+            <div class="seg"><div class="on"><b>Monthly</b>$24.99 / 4 weeks</div><div><b>Annual</b>$99 / year · save 70%</div></div>
+            <div class="pay"><span class="pp">Pay<span>Pal</span></span> vimal.g•••@gmail.com<span class="link" style="margin-left:auto">Change</span></div>
+            <div class="btn grnb">Join for $24.99 · save $12.99 today</div>
+            <div class="legal">By tapping Join, you agree to a $24.99 charge every 4 weeks (+ tax) that auto-renews until you cancel. Cancel anytime in Account → Subscriptions. <u>Terms</u></div>
+          </div>
+          <span class="pin g" style="left:6px;top:276px">1</span>
+          <span class="pin g" style="right:8px;top:316px">2</span>
+          <span class="pin g" style="right:8px;top:446px">3</span>
+          <span class="pin g" style="left:4px;top:534px">4</span>
+          <div class="home-ind"></div>
+        </div></div>
+        <div class="cap"><b>The toggle opens a sheet over the cart.</b> The plan, payment method and button are all on one screen, and the cart is still visible behind it.</div>
+      </div>
+      <div class="arrow">→</div>
+      <!-- A-P2 cart after join -->
+      <div>
+        <div class="phone"><div class="scr">
+          <div class="sb">9:41<i>●●● ᯤ ▮</i></div>
+          <div class="ch"><span class="x">✕</span><div class="t"><b>Your cart</b><span class="cnt">4</span><div>Edit delivery by Wed, Aug 19</div></div></div>
+          <div class="toast"><span class="fp g">F+</span><div><b>You’re a Factor Plus member.</b><br>Shipping is $0 from this box.</div><span style="margin-left:auto;text-decoration:underline">See how</span></div>
+          <div class="body" style="padding-top:62px">
+            <div class="meal"><img src="assets/meal3.jpg"><div class="n">Cavatappi &amp; Meatballs</div><div class="step"><span>−</span><span>1</span><span>+</span></div></div>
+            <div class="meal"><img src="assets/meal4.jpg"><div class="n">Smoky Tomato Chicken</div><div class="step"><span>−</span><span>1</span><span>+</span></div></div>
+            <div style="display:flex;align-items:center;gap:8px;background:var(--cream);border-radius:8px;padding:9px;margin:6px 0 10px;font-weight:700;font-size:11px">＋ Shop for desserts, snacks, and more<span style="margin-left:auto">›</span></div>
+            <div class="h3">Order total</div>
+            <div class="tot">
+              <div class="r"><span>4 meals</span><span>$69.96</span></div>
+              <div class="r"><span>Shipping <span class="fp g">F+</span></span><span><span class="strike">$12.99</span> <span class="grn">$0.00</span></span></div>
+              <div class="r b"><span>Total</span><span><span class="strike">$82.95</span> $69.96</span></div>
+              <div class="mm" style="font-size:10px;margin-top:4px">Factor Plus $24.99 / 4 weeks is billed separately, first on Aug 19.</div>
+            </div>
+          </div>
+          <div class="bottom">
+            <div class="cb"><span class="fp g">F+</span><div>Member · you’re saving <span class="grn">$12.99</span> on this box</div></div>
+            <div class="btn">All done!</div>
+          </div>
+          <span class="pin g" style="right:6px;top:40px">5</span>
+          <span class="pin g" style="right:6px;bottom:38px">5</span>
+          <div class="home-ind"></div>
+        </div></div>
+        <div class="cap"><b>Back in the cart after joining.</b> The new total is shown and the order isn’t interrupted. “See how” opens the welcome screen (C).</div>
+      </div>
+      <div style="width:1px;align-self:stretch;background:#BFD9B5;margin:0 4px"></div>
+      <!-- A-P3 variant B trial -->
+      <div>
+        <div class="phone"><div class="scr">
+          <div class="sb">9:41<i>●●● ᯤ ▮</i></div>
+          <div class="ch"><span class="x">✕</span><div class="t"><b>Your cart</b><span class="cnt">4</span><div>Edit delivery by Wed, Aug 19</div></div></div>
+          <div class="dim"></div>
+          <div class="sheet">
+            <div class="grab"></div>
+            <div style="display:flex;align-items:center;gap:7px"><span class="fp g">F+</span><b>Factor Plus</b><span style="margin-left:auto;color:var(--muted)">✕</span></div>
+            <div style="font-size:18px;font-weight:800;margin:8px 0 2px;letter-spacing:-.02em">Free shipping on your next 2 boxes</div>
+            <div class="mm">Then $24.99 every 4 weeks · cancel anytime</div>
+            <div class="tl">
+              <div><div class="d f"></div><b>Today</b><br>$0 · shipping free</div>
+              <div><div class="d"></div><b>Aug 30</b><br>Reminder</div>
+              <div><div class="d"></div><b>Sep 2</b><br>$24.99, if you stay</div>
+            </div>
+            <div style="margin-top:4px">
+              <div class="ben"><span class="ok">✓</span>Free shipping, every box<span class="v grn">starts today</span></div>
+              <div class="ben"><span class="ok" style="background:#B8B4AA">✓</span>$20 off Premium meals, every box<span class="v mm">after trial</span></div>
+            </div>
+            <div class="pay" style="margin-top:8px"><span class="pp">Pay<span>Pal</span></span> vimal.g•••@gmail.com<span class="link" style="margin-left:auto">Change</span></div>
+            <div class="btn grnb">Start free trial</div>
+            <div class="legal">No charge today. We’ll remind you 3 days before your trial ends. After it ends, it renews at $24.99 every 4 weeks (+ tax) until you cancel. The $20 Premium credit isn’t included in the trial.</div>
+          </div>
+          <span class="pin g" style="right:8px;top:238px">6</span>
+          <div class="home-ind"></div>
+        </div></div>
+        <div class="cap"><b>Variant B (test arm only).</b> A trial costs at most 2 × $12.99 per trialist, with no Premium credit. Ship only once trial-to-paid is ≥50% and the adoption-rate sensitivity P&amp;L is re-run. Dates are illustrative.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ B ============================ -->
+<section>
+  <div class="hd">
+    <div>
+      <h2>B · Post-order interstitial: keep what works, fix the leaks</h2>
+      <div class="why">The Q3 interstitial is Factor’s best surface: it shows up after the order is saved, itemises the savings and leads with the per-week price. But it sells monthly, then hands off to a “next step” where annual is preselected, and it shares the modal with a Meal Shake offer.</div>
+    </div>
+    <span class="kpi g">Hypothesis: interstitial→member ≥ +15% relative vs Q3 design · guardrail: accidental sign-up ≤1% of adopters</span>
+  </div>
+
+  <div class="strip today">
+    <div class="label">
+      <span class="tag">Q3 design</span>
+      <div class="metric">~3–4 taps<small>Add → next step → consent → Join</small></div>
+      <ol>
+        <li><span class="pin">1</span><span>A second offer (Meal Shake) competes in the same modal</span></li>
+        <li><span class="pin">2</span><span>“+$12.99” and “+$20.00” have plus signs, so they read as charges</span></li>
+        <li><span class="pin">3</span><span>“New box total” doesn’t show the old total</span></li>
+        <li><span class="pin">4</span><span>“No thanks, keep paying for shipping” is mild confirmshaming</span></li>
+        <li><span class="pin">5</span><span>“Review your plan on the next step” leads to a different offer (annual preselected)</span></li>
+        <li><span class="pin">6</span><span>Naming drift: “Factor plus” in lower case, “premium upgrades / wk”</span></li>
+      </ol>
+    </div>
+    <div class="phones">
+      <div>
+        <div class="phone"><div class="scr">
+          <div class="sb">9:41<i>●●● ᯤ ▮</i></div>
+          <div class="dim"></div>
+          <div class="sheet" style="top:46px;overflow:hidden">
+            <div class="grab"></div>
+            <div style="display:flex;gap:9px;align-items:center;background:#F3EFE6;border-radius:10px;padding:8px;margin-bottom:10px">
+              <div style="width:42px;height:42px;border-radius:8px;background:#1d1d1b;color:#fff;font-size:7px;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:800">MEAL<br>SHAKE</div>
+              <div style="font-size:10.5px"><b>NEW! Discover Meal Shake</b><br>30g protein, 7g fiber. Member pricing available. <u>Shop on Factor Form</u></div>
+            </div>
+            <span class="grn" style="background:var(--mint);font-size:9.5px;padding:2px 6px;border-radius:4px">Order saved</span>
+            <div style="font-size:16px;font-weight:800;margin:4px 0 0">Arriving on Sat, Sep 12</div>
+            <div class="mm" style="font-size:10px">You can make changes up until Mon, Sep 7</div>
+            <div style="border:1px solid #9FCB90;border-radius:10px;margin-top:10px;overflow:hidden">
+              <div style="background:var(--mint);padding:8px 10px;font-weight:800;font-size:11.5px">Save $12.99 &amp; more this week with Factor plus ⌃</div>
+              <div style="padding:8px 10px">
+                <div class="mm" style="font-size:10px">Just $6.25/week · billed $24.99 every 4 weeks · cancel anytime</div>
+                <div class="ben"><span class="ok">✓</span>Free shipping, every box<span class="v grn">+$12.99</span></div>
+                <div class="ben"><span class="ok">✓</span>$20 off premium upgrades / wk<span class="v grn">+$20.00</span></div>
+                <div class="tot"><div class="r b"><span>New box total:</span><span>$86.94</span></div><div class="r"><b>You save today:</b><span class="grn">-$12.99</span></div></div>
+                <div class="btn" style="margin-top:6px">Add Factor Plus &amp; save $12.99</div>
+                <div class="btn out" style="margin-top:6px">No thanks, keep paying for shipping</div>
+                <div class="mm" style="text-align:center;font-size:9.5px;margin-top:6px">No charge now · review your plan on the next step</div>
+              </div>
+            </div>
+          </div>
+          <span class="pin" style="right:8px;top:74px">1</span>
+          <span class="pin" style="right:4px;top:283px">2</span>
+          <span class="pin" style="left:4px;top:350px">3</span>
+          <span class="pin" style="right:4px;top:474px">4</span>
+          <span class="pin" style="left:4px;top:510px">5</span>
+          <span class="pin" style="right:4px;top:212px">6</span>
+          <div class="home-ind"></div>
+        </div></div>
+        <div class="cap"><b>Q3 interstitial,</b> redrawn as an app sheet from the desktop frame (p-join-screen-3).</div>
+      </div>
+    </div>
+    <div class="label" style="width:auto;flex:1;padding-left:20px">
+      <span class="tag" style="background:var(--green)">Proposed</span>
+      <div class="metric">2 taps, joins here<small>Join → done. The sheet turns into the welcome screen (C)</small></div>
+      <ol>
+        <li><span class="pin g">1</span><span>One offer per modal. Meal Shake moves to a later surface</span></li>
+        <li><span class="pin g">2</span><span>Savings shown as “−$12.99”, not “+$12.99”</span></li>
+        <li><span class="pin g">3</span><span>Old total struck through next to the new one, so the maths can be checked</span></li>
+        <li><span class="pin g">4</span><span>Neutral decline: “Not now” <span class="flag">A/B vs current copy</span></span></li>
+        <li><span class="pin g">5</span><span>Joins in this sheet on the plan shown (monthly). No hand-off to an annual default</span></li>
+        <li><span class="pin g">6</span><span>Canonical names: “Factor Plus”, “$20 off Premium meals, every box”</span></li>
+      </ol>
+    </div>
+    <div class="phones">
+      <div>
+        <div class="phone"><div class="scr">
+          <div class="sb">9:41<i>●●● ᯤ ▮</i></div>
+          <div class="dim"></div>
+          <div class="sheet" style="top:96px">
+            <div class="grab"></div>
+            <div style="display:flex;gap:9px;align-items:center">
+              <div style="width:30px;height:30px;border-radius:50%;background:var(--mint);color:var(--green);display:flex;align-items:center;justify-content:center;font-weight:900">✓</div>
+              <div><span class="grn" style="font-size:9.5px">Order saved</span><div style="font-size:15px;font-weight:800;line-height:1.1">Arriving Sat, Sep 12</div></div>
+            </div>
+            <div style="border:1.5px solid var(--green-2);border-radius:12px;margin-top:12px;padding:10px">
+              <div style="display:flex;align-items:center;gap:6px"><span class="fp g">F+</span><b style="font-size:12.5px">Save $12.99 on this box with Factor Plus</b></div>
+              <div class="mm" style="font-size:10px;margin:3px 0 4px">$24.99 every 4 weeks · pays for itself in 2 boxes · cancel anytime</div>
+              <div class="ben"><span class="ok">✓</span>Free shipping, every box<span class="v grn">−$12.99</span></div>
+              <div class="ben"><span class="ok">✓</span>$20 off Premium meals, every box<span class="v grn">up to −$20</span></div>
+              <div class="tot"><div class="r b"><span>Box total</span><span><span class="strike">$99.93</span> $86.94</span></div></div>
+              <div class="pay" style="margin:8px 0"><span class="pp">Pay<span>Pal</span></span> vimal.g•••@gmail.com<span class="link" style="margin-left:auto">Change</span></div>
+              <div class="btn grnb">Join for $24.99 · save $12.99</div>
+              <div class="btn out" style="margin-top:6px;height:34px;border-color:var(--line)">Not now</div>
+              <div class="legal" style="text-align:center">By tapping Join, you agree to $24.99 every 4 weeks (+ tax), auto-renewing until you cancel.</div>
+            </div>
+          </div>
+          <span class="pin g" style="right:8px;top:104px">1</span>
+          <span class="pin g" style="right:4px;top:244px">2</span>
+          <span class="pin g" style="left:4px;top:318px">3</span>
+          <span class="pin g" style="right:4px;top:448px">4</span>
+          <span class="pin g" style="left:4px;top:404px">5</span>
+          <span class="pin g" style="right:4px;top:184px">6</span>
+          <div class="home-ind"></div>
+        </div></div>
+        <div class="cap"><b>Proposed interstitial.</b> Same moment and the same itemised savings, without the leaks listed on the left.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ C ============================ -->
+<section>
+  <div class="hd">
+    <div>
+      <h2>C · Welcome screen + member price on Premium meals</h2>
+      <div class="why">There’s no welcome or teach screen after joining, and Premium tiles show the full surcharge with no member price. 44% of members never redeem the Premium credit, and 1 in 3 find “premium” unclear. This is an AOR and redemption lever, not an acquisition one, so measure it on its own.</div>
+    </div>
+    <span class="kpi g">Hypothesis: zero-Premium-redemption 44% → ≤30% within 4 boxes · 8-wk AOR ≥ +1pp · kill if &gt;40% (rename the benefit)</span>
+  </div>
+  <div class="strip today">
+    <div class="label">
+      <span class="tag">Today</span>
+      <div class="metric">No teach moment<small>After joining, the user lands back in the product with no guidance</small></div>
+      <ol>
+        <li><span class="pin">1</span><span>No welcome screen in the Figma file (teardown Q6)</span></li>
+        <li><span class="pin">2</span><span>Premium tiles show the full surcharge; the member price is never shown</span></li>
+        <li><span class="pin">3</span><span>The banner says “Save $20” but doesn’t say how or where</span></li>
+      </ol>
+    </div>
+    <div class="phones">
+      <div>
+        <div class="phone"><div class="scr">
+          <div class="sb">9:41<i>●●● ᯤ ▮</i></div>
+          <div class="ghost"><b>No welcome screen</b>After “Join Factor Plus” the modal closes. The Figma file has no confirmation, teach screen or toast.</div>
+          <span class="pin" style="left:50%;top:230px;margin-left:-10px">1</span>
+          <div class="home-ind"></div>
+        </div></div>
+        <div class="cap"><b>After joining.</b> Nothing.</div>
+      </div>
+      <div>
+        <div class="phone"><div class="scr">
+          <div class="sb">9:41<i>●●● ᯤ ▮</i></div>
+          <div class="ch" style="background:#F5F2EB"><span class="x">✕</span><div class="t" style="text-align:left"><b style="font-size:13px">Shop for Mon, Aug 24</b></div><span>🛒</span></div>
+          <div class="tabs"><span>This Week’s Menu</span><span>Top Rated</span><span class="on">Premium</span><span>My Faves</span></div>
+          <div class="body">
+            <div style="font-size:18px;font-weight:800">Premium</div>
+            <div class="mm" style="font-size:10.5px">Craveable, restaurant-worthy meals made with premium proteins</div>
+            <div class="banner"><span class="fp">F+</span>Save $20 on Premium Meals<span style="margin-left:auto">›</span></div>
+            <div class="tile"><img src="assets/filet.jpg"><div class="tb"><span class="chip">PREMIUM</span><div class="nm" style="margin-top:4px">Truffle Butter Filet Mignon</div><div class="pr"><b>+$12.99</b><span class="mm">per serving</span></div></div></div>
+            <div class="tile" style="display:flex;align-items:center;gap:10px;padding:8px"><img src="assets/meal3.jpg" style="width:56px;height:56px;border-radius:8px"><div><span class="chip">PREMIUM</span><div class="nm">Garlic Butter Shrimp</div><b>+$6.99</b></div></div>
+          </div>
+          <span class="pin" style="right:12px;top:430px">2</span>
+          <span class="pin" style="right:8px;top:166px">3</span>
+          <div class="home-ind"></div>
+        </div></div>
+        <div class="cap"><b>Premium tab.</b> Prospects and members see the same surcharge.</div>
+      </div>
+    </div>
+  </div>
+  <div class="strip prop">
+    <div class="label">
+      <span class="tag">Proposed</span>
+      <div class="metric">Teach, then mark it<small>Welcome screen once, then F+ prices on Premium tiles every week</small></div>
+      <ol>
+        <li><span class="pin g">1</span><span>Welcome screen with 3 lines: what you get, when it starts, where to look</span></li>
+        <li><span class="pin g">2</span><span>The main button goes straight to Premium meals, so the first redemption happens in the same session</span></li>
+        <li><span class="pin g">3</span><span>A credit meter shows how much of the $20 is left on this box</span></li>
+        <li><span class="pin g">4</span><span>Tiles show the price after the credit (“$0 with F+”) rather than the surcharge</span></li>
+        <li><span class="pin g">5</span><span>Prospects see the same tile as a nudge: “$0 with Factor Plus” links to the join sheet (A)</span></li>
+      </ol>
+    </div>
+    <div class="phones">
+      <div>
+        <div class="phone"><div class="scr">
+          <div class="sb">9:41<i>●●● ᯤ ▮</i></div>
+          <div class="dim"></div>
+          <div class="sheet" style="top:120px">
+            <div class="grab"></div>
+            <div style="text-align:center;margin:6px 0 10px"><span class="fp g lg">F+</span>
+              <div style="font-size:20px;font-weight:800;margin-top:8px;letter-spacing:-.02em">You’re in.</div>
+              <div class="mm">Here’s how to get the most from Factor Plus</div></div>
+            <div class="ben" style="align-items:flex-start;padding:9px 0"><span style="font-size:16px">🚚</span><div><b>Shipping is $0</b><div class="mm">Starting with your Aug 24 box.</div></div></div>
+            <div class="ben" style="align-items:flex-start;padding:9px 0"><span style="font-size:16px">🥩</span><div><b>$20 off Premium meals, every box</b><div class="mm">Your credit refreshes every box. Look for <span class="fp g">F+</span> <b style="color:var(--green)">$0</b> on Premium meals.</div></div></div>
+            <div class="ben" style="align-items:flex-start;padding:9px 0"><span style="font-size:16px">📈</span><div><b>See what you’ve saved</b><div class="mm">Account → Factor Plus shows your savings each cycle.</div></div></div>
+            <div class="btn grnb" style="margin-top:10px">Pick a Premium meal</div>
+            <div style="text-align:center;margin-top:9px"><span class="link" style="color:var(--ink)">Back to my cart</span></div>
+          </div>
+          <span class="pin g" style="right:10px;top:250px">1</span>
+          <span class="pin g" style="right:10px;top:436px">2</span>
+          <div class="home-ind"></div>
+        </div></div>
+        <div class="cap"><b>Welcome screen</b> (Uber One / DashPass / Grubhub pattern: “look for the icon”).</div>
+      </div>
+      <div class="arrow">→</div>
+      <div>
+        <div class="phone"><div class="scr">
+          <div class="sb">9:41<i>●●● ᯤ ▮</i></div>
+          <div class="ch" style="background:#F5F2EB"><span class="x">✕</span><div class="t" style="text-align:left"><b style="font-size:13px">Shop for Mon, Aug 24</b></div><span>🛒</span></div>
+          <div class="tabs"><span>This Week’s Menu</span><span>Top Rated</span><span class="on">Premium</span><span>My Faves</span></div>
+          <div class="body">
+            <div style="font-size:18px;font-weight:800">Premium</div>
+            <div class="banner" style="display:block"><div style="display:flex;align-items:center;gap:6px"><span class="fp g">F+</span>Your Premium credit<span style="margin-left:auto" class="grn">$20 left on this box</span></div><div class="meter"><i></i></div></div>
+            <div class="tile"><img src="assets/filet.jpg"><div class="tb"><span class="chip">PREMIUM</span><div class="nm" style="margin-top:4px">Truffle Butter Filet Mignon</div><div class="pr"><span class="strike">+$12.99</span><span class="fp g">F+</span><b class="grn">$0</b><span class="mm">with your credit</span></div></div></div>
+            <div class="tile" style="display:flex;align-items:center;gap:10px;padding:8px"><img src="assets/meal3.jpg" style="width:56px;height:56px;border-radius:8px"><div><span class="chip">PREMIUM</span><div class="nm">Garlic Butter Shrimp</div><span class="strike">+$6.99</span> <span class="fp g">F+</span> <b class="grn">$0</b></div></div>
+            <div class="mm" style="font-size:10px;border:1px dashed #BFD9B5;border-radius:8px;padding:7px"><b style="color:var(--ink)">Prospect view of the same tile:</b> <span class="strike">+$12.99</span> · <b class="grn">$0 with Factor Plus ›</b> (opens sheet A)</div>
+          </div>
+          <span class="pin g" style="right:10px;top:150px">3</span>
+          <span class="pin g" style="right:10px;top:420px">4</span>
+          <span class="pin g" style="right:6px;top:566px">5</span>
+          <div class="home-ind"></div>
+        </div></div>
+        <div class="cap"><b>Premium tab, member view.</b> The credit and the member price appear where the choice is made.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ D ============================ -->
+<section>
+  <div class="hd">
+    <div>
+      <h2>D · Entry points + one savings claim</h2>
+      <div class="why">There are 7 entry points with 7 different lines. The home bar sits below supplements, and the Benefits page frames Factor Plus as LOCKED. The proposal: use one claim everywhere, show the maths, and move the pitch above the fold only for prospects whose orders show they’d benefit. Do this after A, so the extra traffic doesn’t land in today’s 5-tap flow.</div>
+    </div>
+    <span class="kpi g">Hypothesis: targeted home entry CTR ≥2× · add-on attach ≥ −3% relative · one-claim join conversion ≥ +10%</span>
+  </div>
+  <div class="strip today">
+    <div class="label">
+      <span class="tag">Today</span>
+      <div class="metric">4 savings numbers<small>$12.99 · up to $32 · $80/mo · 67% vs 70%</small></div>
+      <ol>
+        <li><span class="pin">1</span><span>The card is framed as LOCKED, with lock icons: a benefit withheld rather than gained</span></li>
+        <li><span class="pin">2</span><span>“Free standard shipping” is a fourth name for the shipping benefit</span></li>
+        <li><span class="pin">3</span><span>No number and no reason to act now</span></li>
+        <li><span class="pin">4</span><span>A second Factor Plus card is repeated below</span></li>
+      </ol>
+    </div>
+    <div class="phones">
+      <div>
+        <div class="phone"><div class="scr" style="background:var(--cream)">
+          <div class="sb">9:41<i>●●● ᯤ ▮</i></div>
+          <div class="body">
+            <div style="font-size:18px;font-weight:800;margin:4px 0 10px">Your benefits <span class="cnt" style="background:#1e2a78;color:#fff">2</span></div>
+            <div class="card"><b>Welcome offer</b><div class="mm">Box 1 50% off · Box 2 10% off · Box 3 coming soon</div></div>
+            <div class="card">
+              <div style="display:flex;justify-content:space-between"><span style="font-size:16px">🔒</span><span class="lock">LOCKED</span></div>
+              <div class="mm" style="font-size:10px;margin-top:6px">Factor Plus</div>
+              <div style="font-size:15px;font-weight:800;line-height:1.15">Unlock free shipping &amp; premium meals</div>
+              <div class="mm" style="font-size:10.5px;margin:4px 0 8px">Join Factor Plus to unlock these perks on every order.</div>
+              <div class="ben"><span>📦</span><div><b>Free standard shipping</b><div class="mm">On every box</div></div><span style="margin-left:auto">🔒</span></div>
+              <div class="ben"><span>🎁</span><div><b>Premium meals — $20 off</b><div class="mm">Every single week</div></div><span style="margin-left:auto">🔒</span></div>
+              <div class="btn" style="margin-top:8px">Join Factor Plus</div>
+            </div>
+            <div class="card" style="display:flex;justify-content:space-between;align-items:center"><div><b>Factor Plus</b><div class="mm" style="font-size:10px">Join Factor Plus and save on shipping, plus unlock $20 off Premium Meals every week</div></div><b style="font-size:9px;letter-spacing:.1em">FACTOR_<span style="color:#C9B42E">PLUS</span></b></div>
+          </div>
+          <span class="pin" style="right:10px;top:160px">1</span>
+          <span class="pin" style="left:4px;top:288px">2</span>
+          <span class="pin" style="right:10px;top:396px">3</span>
+          <span class="pin" style="right:10px;top:468px">4</span>
+          <div class="home-ind"></div>
+        </div></div>
+        <div class="cap"><b>Benefits page (E5).</b> The home bar (E1) is below supplements and Berry Street, so few users scroll to it.</div>
+      </div>
+    </div>
+    <div class="label" style="width:auto;flex:1;padding-left:20px">
+      <span class="tag" style="background:var(--green)">Proposed</span>
+      <div class="metric">1 claim, maths shown<small>“Save $12.99 on every box — pays for itself in 2 boxes”</small></div>
+      <ol>
+        <li><span class="pin g">1</span><span>Home, above the fold, shown only to prospects who paid shipping on ≥2 of the last 4 boxes or order Premium</span></li>
+        <li><span class="pin g">2</span><span>Personal look-back with the maths shown: shipping paid − membership = net saving <span class="flag">option: needs data check</span></span></li>
+        <li><span class="pin g">3</span><span>The Benefits card says what you’d gain (“−$12.99 on your next box”) instead of LOCKED</span></li>
+        <li><span class="pin g">4</span><span>Every button opens sheet A, so all entry points share one join flow</span></li>
+        <li><span class="pin g">5</span><span>Remove the duplicate card; remove E7 (new-customer checkout) until after box 2</span></li>
+      </ol>
+    </div>
+    <div class="phones">
+      <div>
+        <div class="phone"><div class="scr" style="background:var(--cream)">
+          <div class="sb">9:41<i>●●● ᯤ ▮</i></div>
+          <div style="text-align:center;font-weight:900;letter-spacing:.3em;font-size:13px;padding:4px 0 10px">FACTOR_</div>
+          <div class="body">
+            <div style="font-size:18px;font-weight:800;margin-bottom:8px">My Menu · Aug 24</div>
+            <div class="card" style="border:1.5px solid var(--green-2)">
+              <div style="display:flex;align-items:center;gap:6px"><span class="fp g">F+</span><b style="font-size:12.5px">Save $12.99 on every box</b></div>
+              <div style="background:var(--mint-2);border-radius:8px;padding:8px;margin:8px 0;font-size:10.5px">
+                <div style="display:flex;justify-content:space-between"><span>Shipping you paid, last 4 weeks (3 boxes)</span><b>$38.97</b></div>
+                <div style="display:flex;justify-content:space-between"><span>Factor Plus, 4 weeks</span><b>−$24.99</b></div>
+                <div style="display:flex;justify-content:space-between;border-top:1px solid #BFD9B5;margin-top:4px;padding-top:4px"><b>You’d have kept</b><b class="grn">$13.98</b></div>
+              </div>
+              <div class="mm" style="font-size:10px;margin-bottom:8px">Plus $20 off Premium meals, every box. Cancel anytime.</div>
+              <div class="btn grnb" style="height:34px">Join for $24.99 / 4 weeks</div>
+            </div>
+            <div class="card" style="display:flex;gap:10px;align-items:center"><img src="assets/meal1.jpg" style="width:46px;height:46px;border-radius:8px"><div><b>Roasted Garlic Chicken</b><div class="mm">+ 3 more meals</div></div></div>
+            <div class="card" style="color:var(--muted);font-size:11px">Supplements · Berry Street · …</div>
+          </div>
+          <span class="pin g" style="right:10px;top:100px">1</span>
+          <span class="pin g" style="left:4px;top:180px">2</span>
+          <span class="pin g" style="right:10px;top:318px">4</span>
+          <div class="home-ind"></div>
+        </div></div>
+        <div class="cap"><b>Home, targeted prospects only.</b> The look-back uses the customer’s own shipping charges as the basis for the claim.</div>
+      </div>
+      <div>
+        <div class="phone"><div class="scr" style="background:var(--cream)">
+          <div class="sb">9:41<i>●●● ᯤ ▮</i></div>
+          <div class="body">
+            <div style="font-size:18px;font-weight:800;margin:4px 0 10px">Your benefits</div>
+            <div class="card"><b>Welcome offer</b><div class="mm">Box 1 50% off · Box 2 10% off · Box 3 coming soon</div></div>
+            <div class="card" style="border:1.5px solid var(--green-2)">
+              <div style="display:flex;justify-content:space-between;align-items:center"><span class="fp g">F+</span><span class="grn" style="font-size:10px;background:var(--mint);padding:2px 7px;border-radius:5px">Available to you</span></div>
+              <div class="mm" style="font-size:10px;margin-top:6px">Factor Plus</div>
+              <div style="font-size:15px;font-weight:800;line-height:1.15">−$12.99 on your next box</div>
+              <div class="mm" style="font-size:10.5px;margin:4px 0 8px">Pays for itself in 2 boxes · cancel anytime</div>
+              <div class="ben"><span class="ok">✓</span>Free shipping, every box<span class="v grn">−$12.99</span></div>
+              <div class="ben"><span class="ok">✓</span>$20 off Premium meals, every box<span class="v grn">up to −$20</span></div>
+              <div class="btn grnb" style="margin-top:8px">Join for $24.99 / 4 weeks</div>
+            </div>
+            <div class="card" style="color:var(--muted);font-size:11px">Rewards · Refer your friends · Nutrition coaching …</div>
+          </div>
+          <span class="pin g" style="right:10px;top:236px">3</span>
+          <span class="pin g" style="right:10px;top:362px">4</span>
+          <span class="pin g" style="right:10px;top:418px">5</span>
+          <div class="home-ind"></div>
+        </div></div>
+        <div class="cap"><b>Benefits page.</b> Framed as a gain, with the same claim and the same sheet.</div>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:30px;font-size:19px">Canonical copy (use on every surface)</h3>
+  <table class="copy">
+    <tr><th style="width:18%">Concept</th><th style="width:30%">Use</th><th>Retire</th></tr>
+    <tr><td>Product</td><td class="k">Factor Plus · badge <span class="fp g">F+</span></td><td>Factor plus · FACTOR_PLUS · “Membership”</td></tr>
+    <tr><td>Headline claim</td><td class="k">Save $12.99 on every box · pays for itself in 2 boxes</td><td>“up to $32” · “$80 a month” (unless analytics can back it with a disclosed basis) · “Save $12.99 &amp; more”</td></tr>
+    <tr><td>Benefit 1</td><td class="k">Free shipping, every box</td><td>free standard shipping · free delivery · “Always $0”</td></tr>
+    <tr><td>Benefit 2</td><td class="k">$20 off Premium meals, every box</td><td>premium upgrades · Chef’s Choice and premium selections · per week / every single week / wk</td></tr>
+    <tr><td>Annual saving</td><td class="k">save 70% (vs 13 × $24.99)</td><td>Save 67%</td></tr>
+    <tr><td>Savings direction</td><td class="k">−$12.99 (minus = money back to you)</td><td>+$12.99 next to a saving</td></tr>
+    <tr><td>Decline</td><td class="k">Not now</td><td>No thanks, keep paying for shipping (A/B before retiring)</td></tr>
+    <tr><td>Cancel line</td><td class="k">Cancel anytime</td><td>“Risk-free” next to “nonrefundable”</td></tr>
+  </table>
+  <div class="note"><b>Open items before this goes to design:</b> (1) Is the consent checkbox a legal requirement under state auto-renewal laws? This decides whether A gets down to 2 taps. (2) Where does “$80 a month” come from? (3) Billing timing: is the membership charged with the box or separately? The mockup assumes separately. (4) Does the look-back card in D have data for ≥3 recent boxes per prospect? (5) Variant B needs the P&amp;L re-run and a ≥50% trial-to-paid guardrail. (6) Brand check on the F+ badge colour (black today; green in the mockup to mark membership states).</div>
+</div>
+
+</div>
+</body>
+</html>
